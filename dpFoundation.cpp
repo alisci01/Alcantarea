@@ -119,6 +119,9 @@ void* dpAllocateForward(size_t size, void *location)
     // ドキュメントには、アドレス指定の VirtualAlloc() は指定先が既に予約されている場合最寄りの領域を返す、
     // と書いてるように見えるが、実際には NULL が返ってくるようにしか見えない。
     // なので成功するまでアドレスを進めつつリトライ…。
+	// according to MSDN, VirtualAlloc() returns the next page if the passed in address is already reserved.
+	//	instead, it seems to be returning NULL, so we keep attempting to commit memory while incrementing
+	//	the ptr until we have succeeded.
     void *ret = NULL;
     const size_t step = 0x10000; // 64kb
     for(size_t i=0; ret==NULL; ++i) {

@@ -74,6 +74,9 @@ inline bool alcIsValidMemory(void *p)
 // dll が export している関数 (への RVA) を書き換える
 // それにより、GetProcAddress() が返す関数をすり替える
 // 元の関数へのポインタを返す
+// changes the RVA exported by the DLL to the function passed in,
+//	causing a different function ptr returned by GetProcAddress().
+// return the original function ptr being overwritten.
 void* alcOverrideDLLExport(HMODULE module, const char *funcname, void *hook_, void *trampoline_space)
 {
     if(!alcIsValidMemory(module)) { return nullptr; }
