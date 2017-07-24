@@ -33,7 +33,7 @@
 #   define dpVCVersion "vc140"
 #   define dpVCYear    2015
 #elif _MSC_VER==1910
-#   define dpVCVersion "vc150"
+#   define dpVCVersion "vc141"
 #   define dpVCYear    2017
 #endif
 
