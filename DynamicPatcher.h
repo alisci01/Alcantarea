@@ -17,22 +17,22 @@
 #   define dpLibArch "32"
 #endif //_M_X64
 
-#if   _MSC_VER==1500
+#if   _MSC_VER>=1500 && _MSC_VER<1600
 #   define dpVCVersion "vc90"
 #   define dpVCYear    2008
-#elif _MSC_VER==1600
+#elif _MSC_VER>=1600 && _MSC_VER<1700
 #   define dpVCVersion "vc100"
 #   define dpVCYear    2010
-#elif _MSC_VER==1700
+#elif _MSC_VER>=1700 && _MSC_VER<1800
 #   define dpVCVersion "vc110"
 #   define dpVCYear    2012
-#elif _MSC_VER==1800
+#elif _MSC_VER>=1800 && _MSC_VER<1900
 #   define dpVCVersion "vc120"
 #   define dpVCYear    2013
-#elif _MSC_VER==1900
+#elif _MSC_VER>=1900 && _MSC_VER<1910
 #   define dpVCVersion "vc140"
 #   define dpVCYear    2015
-#elif _MSC_VER==1910
+#elif _MSC_VER>=1910 && _MSC_VER<1920
 #   define dpVCVersion "vc141"
 #   define dpVCYear    2017
 #endif
