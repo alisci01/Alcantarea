@@ -78,12 +78,15 @@ inline bool operator==(const dpPatchData &a, const dpPatchData &b) { return a.ta
 
 
 // アラインが必要な section データを再配置するための単純なアロケータ
+// a simple allocator for relocating the section data that needs to be aligned
 class dpSectionAllocator
 {
 public:
     // data=NULL, size_t size=0xffffffff で初期化した場合、必要な容量を調べるのに使える
+	// Data = NULL, size_t When initialized with size = 0xffffffff, it can be used to check the required capacity
     dpSectionAllocator(void *data=NULL, size_t size=0xffffffff);
     // align: 2 の n 乗である必要がある
+	// align: must be 2^n power
     void* allocate(size_t size, size_t align);
     size_t getUsed() const;
 private:

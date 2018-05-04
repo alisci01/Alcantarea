@@ -159,15 +159,18 @@ bool dpObjFile::loadMemory(const char *path, void *data, size_t size, dpTime mti
     m_linkdata.resize(m_SectionCount);
 
     // アラインが必要な section をアラインしつつ新しい領域に移す
+	// Move the section that needs to be aligned to a new region while aligning it
     m_aligned_data = nullptr;
     m_aligned_datasize = 0xffffffff;
     for(size_t ti=0; ti<2; ++ti) {
         // ti==0 で必要な容量を調べ、ti==1 で実際のメモリ確保と再配置を行う
+		// check the required capacity with ti == 0 and reserve and relocate the actual memory at ti == 1
         dpSectionAllocator salloc(m_aligned_data, m_aligned_datasize);
 
         for(size_t si=0; si<m_SectionCount; ++si) {
             IMAGE_SECTION_HEADER &sect = m_pSectionHeader[si];
             // IMAGE_SECTION_HEADER::Characteristics にアライン情報が詰まっている
+			// IMAGE_SECTION_HEADER::Characteristics is packed with memory alignment information
             DWORD align = 1 << (((sect.Characteristics & 0x00f00000) >> 20) - 1);
             if(align==1) {
                 // do nothing
@@ -190,6 +193,7 @@ bool dpObjFile::loadMemory(const char *path, void *data, size_t size, dpTime mti
     }
 
     // symbol 収集処理
+	// symbol collection process
     for( size_t i=0; i<m_SymbolCount; ++i ) {
         TIMAGE_SYMBOL sym(m_pSymbolTable + m_SymSize*i, m_StringTable, m_IsBigobj);
         if(sym.SectionNumber>0) {
@@ -218,6 +222,7 @@ bool dpObjFile::loadMemory(const char *path, void *data, size_t size, dpTime mti
     for(size_t si=0; si<m_SectionCount; ++si) {
         IMAGE_SECTION_HEADER &sect = m_pSectionHeader[si];
         // .drectve section には linker directive が入っており、dllexport 付き symbol のリストがここに含まれる
+		// .drectve section contains a linker directive and a list of symbols with dllexport is included here
         if(strncmp((char*)sect.Name, ".drectve", 8)==0) {
             char *data = (char*)(ImageBase + sect.PointerToRawData);
             data[sect.SizeOfRawData] = '\0';
