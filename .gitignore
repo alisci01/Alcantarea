@@ -1,0 +1,14 @@
+.vs/
+_tmp/
+obj/
+Debug/
+Backup/
+*.dll
+*.exe
+*.obj
+*.pdb
+*.user
+*.log
+*.pch
+*.lib
+UpgradeLog.htm
